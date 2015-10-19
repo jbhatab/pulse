@@ -1,9 +1,16 @@
 import { combineReducers } from 'redux';
 import counter from './counter';
+import messages from './messages';
+
 import {
   INCREMENT_COUNTER, DECREMENT_COUNTER,
   UNDO_COUNTER, REDO_COUNTER
 } from '../actions/counter';
+
+import {
+  CREATE_MESSAGE
+} from '../actions/chat';
+
 import undoable, { includeAction } from 'redux-undo';
 
 
@@ -14,7 +21,13 @@ const rootReducer = combineReducers({
     debug: true,
     undoType: UNDO_COUNTER,
     redoType: REDO_COUNTER
-  })
+  }),
+
+  messages: undoable(messages, {
+    filter: includeAction([CREATE_MESSAGE]),
+    limit: 10,
+    debug: true
+  }) 
 });
 
 
