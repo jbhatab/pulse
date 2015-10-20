@@ -10,34 +10,30 @@ export default class Chat extends Component {
       logger: ((kind, msg, data) => { console.log(`${kind}: ${msg}`, data) })
     })
 
-    // console.log(socket)
+    // console.lg(socket)
 
     socket.connect({user_id: "123"})
-    // var $status    = $("#status")
-    // var $messages  = $("#messages")
-    // var $input     = $("#message-input")
-    // var $username  = $("#username")
 
     socket.onOpen( ev => console.log("OPEN", ev) )
     socket.onError( ev => console.log("ERROR", ev) )
     socket.onClose( e => console.log("CLOSE", e))
 
-    var chan = socket.chan("rooms:lobby", {})
-    chan.join().receive("ignore", () => console.log("auth error"))
+    this.chan = socket.chan("rooms:lobby", {})
+    this.chan.join().receive("ignore", () => console.log("auth error"))
                .receive("ok", () => console.log("join ok"))
                .after(10000, () => console.log("Connection interruption"))
-    chan.onError(e => console.log("something went wrong", e))
-    chan.onClose(e => console.log("channel closed", e))
+    this.chan.onError(e => console.log("something went wrong", e))
+    this.chan.onClose(e => console.log("channel closed", e))
 
     this.state = { message: '', tempMessages: [] }
 
-    chan.on("new:msg", msg => {
+    this.chan.on("new:msg", msg => {
       let newMessages = this.state.tempMessages
       newMessages.push(`${msg.user || 'anonymous'}: ${msg.body}`)
       this.setState({tempMessages: newMessages})
     })
 
-    chan.on("user:entered", msg => {
+    this.chan.on("user:entered", msg => {
       let newMessages = this.state.tempMessages
       newMessages.push(`${msg.user || 'anonymous'} Entered`)
       this.setState({tempMessages: newMessages})
@@ -49,11 +45,15 @@ export default class Chat extends Component {
     createMessage: PropTypes.func.isRequired
   }
 
-  changeMessage(e) {
-    // if (e.keyCode == 13) {
-    //     chan.push("new:msg", {user: $username.val(), body: $input.val()})
-    //     $input.val("")
-    //   }
+  onInputKeyDown(e) {
+    if (e.keyCode == 13) {
+      this.chan.push("new:msg", {user: 'anonymous', body: this.state.message})
+      this.setState({message: ""})
+      e.preventDefault()
+    }
+  }
+
+  onInputChange(e) {
     this.setState({message: e.target.value})
   }
 
@@ -70,8 +70,10 @@ export default class Chat extends Component {
     ));
     return (
       <div>
-        <input onChange={e => this.changeMessage(e)} value={this.state.message}/>
-        <button onClick={e => this.submitMessage()}>Enter</button>
+        <input
+          onChange={e => this.onInputChange(e)}
+          onKeyDown={e => this.onInputKeyDown(e)}
+          value={this.state.message}/>
         <ul>
           { Messages }
         </ul>
