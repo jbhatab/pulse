@@ -23,11 +23,7 @@ const rootReducer = combineReducers({
     redoType: REDO_COUNTER
   }),
 
-  messages: undoable(messages, {
-    filter: includeAction([CREATE_MESSAGE]),
-    limit: 10,
-    debug: true
-  }) 
+  messages: messages
 });
 
 
