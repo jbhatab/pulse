@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux';
 import counter from './counter';
 import messages from './messages';
+import rooms from './rooms';
 
 import {
   INCREMENT_COUNTER, DECREMENT_COUNTER,
@@ -23,7 +24,10 @@ const rootReducer = combineReducers({
     redoType: REDO_COUNTER
   }),
 
-  messages: messages
+  messages: messages,
+
+  rooms: rooms
+
 });
 
 

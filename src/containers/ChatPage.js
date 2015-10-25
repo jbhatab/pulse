@@ -5,8 +5,12 @@ import * as ChatActions from '../actions/chat';
 
 
 function mapStateToProps(state) {
+  console.log('STATEEE')
+  console.log(state.rooms)
   return {
-    messages: state.messages.data
+    messages: state.messages.list,
+    rooms: state.rooms.list,
+    currentRoom: state.rooms.currentRoom
   };
 }
 

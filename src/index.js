@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom';
 import Root from './containers/Root';
 import createBrowserHistory from 'history/lib/createBrowserHistory';
 
-
 const history = createBrowserHistory();
 
 
