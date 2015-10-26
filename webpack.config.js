@@ -21,13 +21,17 @@ module.exports = {
     })
   ],
   resolve: {
-    extensions: ['', '.js']
+    extensions: ['', '.sass', '.js']
   },
   module: {
     loaders: [{
       test: /\.js$/,
       loaders: ['react-hot', 'babel'],
       exclude: /node_modules/
+    },
+    {
+      test: /\.sass$/,
+      loader: 'style!css!sass?indentedSyntax'
     }]
   }
 };

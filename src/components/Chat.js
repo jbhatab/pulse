@@ -86,23 +86,11 @@ export default class Chat extends Component {
       </li>
     ));
 
-    let roomStyles = {
-      background: '#EEE',
-      cursor: 'pointer'
-    }
-
     let Rooms = this.props.rooms.map((room, index) => (
-      <li style={roomStyles} onClick={e => this.onRoomChange(room)} key={`${index}-room.name`}>
+      <li onClick={e => this.onRoomChange(room)} key={`${index}-room.name`}>
         {room.name}
       </li>
     ));
-
-    const sidebarStyles = {
-      display: 'inline-block',
-      width: '200px'};
-
-    const chatStyles = {
-      display: 'inline-block'};
 
     let roomTitle;
     if (this.props.currentRoom.name) {
@@ -113,22 +101,35 @@ export default class Chat extends Component {
 
     return (
       <div>
-        <div style={sidebarStyles}>
-          <ul>
-            { Rooms }
-          </ul>
+        <div className='left-sidebar-wrapper sidebar-wrapper'>
+          <div className='sidebar-section'>
+            <h3 className='title'>
+              Channels
+            </h3>
+
+            <ul className='list'>
+              { Rooms }
+            </ul>
+          </div>
         </div>
-        <div style={chatStyles}>
-          <input
-            onChange={e => this.onInputChange(e)}
-            onKeyDown={e => this.onInputKeyDown(e)}
-            value={this.state.message}/>
+        <div className='chat-wrapper'>
           <h1>
           { roomTitle }
           </h1>
           <ul>
             { Messages }
           </ul>
+
+          <div className='chat-input-wrapper'>
+            <input
+              className='chat-input'
+              onChange={e => this.onInputChange(e)}
+              onKeyDown={e => this.onInputKeyDown(e)}
+              value={this.state.message}/>
+          </div>
+        </div>
+
+        <div className='right-sidebar-wrapper sidebar-wrapper'>
         </div>
       </div>
     );
