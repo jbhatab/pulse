@@ -5,8 +5,6 @@ import * as ChatActions from '../actions/chat';
 
 
 function mapStateToProps(state) {
-  console.log('STATEEE')
-  console.log(state.rooms)
   return {
     messages: state.messages.list,
     rooms: state.rooms.list,

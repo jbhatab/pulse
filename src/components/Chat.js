@@ -123,6 +123,7 @@ export default class Chat extends Component {
           <div className='chat-input-wrapper'>
             <input
               className='chat-input'
+              placeholder='Enter a message mother fucker!!!'
               onChange={e => this.onInputChange(e)}
               onKeyDown={e => this.onInputKeyDown(e)}
               value={this.state.message}/>

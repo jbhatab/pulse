@@ -8,10 +8,6 @@ import {
   UNDO_COUNTER, REDO_COUNTER
 } from '../actions/counter';
 
-import {
-  CREATE_MESSAGE
-} from '../actions/chat';
-
 import undoable, { includeAction } from 'redux-undo';
 
 
