@@ -8,7 +8,8 @@ function mapStateToProps(state) {
   return {
     messages: state.messages.list,
     rooms: state.rooms.list,
-    currentRoom: state.rooms.currentRoom
+    currentRoom: state.rooms.currentRoom,
+    user: state.user
   };
 }
 
@@ -16,6 +17,5 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(ChatActions, dispatch);
 }
-
 
 export default connect(mapStateToProps, mapDispatchToProps)(Chat);

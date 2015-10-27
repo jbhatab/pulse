@@ -10,3 +10,18 @@
         font-size: 1.4rem
         &:hover
           background: darken($steel, 5%)
+
+  .user-input
+    position: absolute
+    bottom: 1rem
+    left: 1rem
+    width: calc(100% - 2rem)
+    border: 2px solid #ddd
+    height: 4rem
+    +border-radius()
+    padding: 1rem
+    color: $steel
+
+    &:focus
+      border-color: darken(#ddd, 5%)
+      outline: none

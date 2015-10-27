@@ -27,6 +27,7 @@ export default class Chat extends Component {
     this.state = {
       message: '',
       tempMessages: [],
+      inputUsername: ''
     }
 
     this.chan.on("new:msg", msg => {
@@ -38,6 +39,12 @@ export default class Chat extends Component {
     this.chan.on("user:entered", msg => {
       let newMessages = this.state.tempMessages
       newMessages.push(`${msg.user || 'anonymous'} Entered`)
+      this.setState({tempMessages: newMessages})
+    })
+
+    this.chan.on("user:set_username", user => {
+      let newMessages = this.state.tempMessages
+      newMessages.push(`${user.username} set their name`)
       this.setState({tempMessages: newMessages})
     })
 
@@ -57,7 +64,7 @@ export default class Chat extends Component {
       });
   }
 
-  onInputKeyDown(e) {
+  onMessageKeyDown(e) {
     if (e.keyCode == 13 && this.props.currentRoom.id) {
       this.chan.push("new:msg", {user: 'anonymous', body: this.state.message, room_id: this.props.currentRoom.id})
       this.setState({message: ""})
@@ -65,8 +72,19 @@ export default class Chat extends Component {
     }
   }
 
-  onInputChange(e) {
+  onMessageChange(e) {
     this.setState({message: e.target.value})
+  }
+
+  onUserKeyDown(e) {
+    if (e.keyCode == 13) {
+      this.chan.push("change:username", {username: this.state.inputUsername})
+      e.preventDefault()
+    }
+  }
+
+  onUserChange(e) {
+    this.setState({inputUsername: e.target.value})
   }
 
   submitMessage() {
@@ -75,7 +93,6 @@ export default class Chat extends Component {
   }
 
   onRoomChange(room) {
-    console.log(room)
     this.props.changeRoom(room)
   }
 
@@ -110,11 +127,18 @@ export default class Chat extends Component {
             <ul className='list'>
               { Rooms }
             </ul>
+
+            <input
+              className='user-input'
+              placeholder='Enter a name mother fucker!!!'
+              onChange={e => this.onUserChange(e)}
+              onKeyDown={e => this.onUserKeyDown(e)}
+              value={this.state.inputUsername}/>
           </div>
         </div>
         <div className='chat-wrapper'>
           <h1>
-          { roomTitle }
+            { roomTitle }
           </h1>
           <ul>
             { Messages }
@@ -124,8 +148,8 @@ export default class Chat extends Component {
             <input
               className='chat-input'
               placeholder='Enter a message mother fucker!!!'
-              onChange={e => this.onInputChange(e)}
-              onKeyDown={e => this.onInputKeyDown(e)}
+              onChange={e => this.onMessageChange(e)}
+              onKeyDown={e => this.onMessageKeyDown(e)}
               value={this.state.message}/>
           </div>
         </div>
