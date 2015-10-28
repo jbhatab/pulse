@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 import {Socket, LongPoller} from "../phoenix"
 import request from "superagent"
+import Sidebar from "./Sidebar"
 
 
 export default class Chat extends Component {
@@ -27,7 +28,6 @@ export default class Chat extends Component {
     this.state = {
       message: '',
       tempMessages: [],
-      inputUsername: ''
     }
 
     this.chan.on("new:msg", msg => {
@@ -54,16 +54,6 @@ export default class Chat extends Component {
     createMessage: PropTypes.func.isRequired
   }
 
-  componentWillMount() {
-    request
-      .get('http://127.0.0.1:4000/rooms')
-      .end((err, res) => {
-        let rooms = JSON.parse(res.text).data
-        this.props.setRooms(rooms)
-        // Calling the end function will send the request
-      });
-  }
-
   onMessageKeyDown(e) {
     if (e.keyCode == 13 && this.props.currentRoom.id) {
       this.chan.push("new:msg", {user: 'anonymous', body: this.state.message, room_id: this.props.currentRoom.id})
@@ -76,36 +66,15 @@ export default class Chat extends Component {
     this.setState({message: e.target.value})
   }
 
-  onUserKeyDown(e) {
-    if (e.keyCode == 13) {
-      this.chan.push("change:username", {username: this.state.inputUsername})
-      e.preventDefault()
-    }
-  }
-
-  onUserChange(e) {
-    this.setState({inputUsername: e.target.value})
-  }
-
   submitMessage() {
     this.props.createMessage(this.state.message)
     this.setState({message: ''})
   }
 
-  onRoomChange(room) {
-    this.props.changeRoom(room)
-  }
-
   render() {
-    const Messages = this.state.tempMessages.map((message, index) => (
+    const Messages = this.props.messages.map((message, index) => (
       <li key={`${index}-message`}>
         {message}
-      </li>
-    ));
-
-    let Rooms = this.props.rooms.map((room, index) => (
-      <li onClick={e => this.onRoomChange(room)} key={`${index}-room.name`}>
-        {room.name}
       </li>
     ));
 
@@ -118,24 +87,7 @@ export default class Chat extends Component {
 
     return (
       <div>
-        <div className='left-sidebar-wrapper sidebar-wrapper'>
-          <div className='sidebar-section'>
-            <h3 className='title'>
-              Channels
-            </h3>
-
-            <ul className='list'>
-              { Rooms }
-            </ul>
-
-            <input
-              className='user-input'
-              placeholder='Enter a name mother fucker!!!'
-              onChange={e => this.onUserChange(e)}
-              onKeyDown={e => this.onUserKeyDown(e)}
-              value={this.state.inputUsername}/>
-          </div>
-        </div>
+        <Sidebar {...this.props}/>
         <div className='chat-wrapper'>
           <h1>
             { roomTitle }
