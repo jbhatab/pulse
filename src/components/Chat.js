@@ -72,7 +72,7 @@ export default class Chat extends Component {
   }
 
   render() {
-    const Messages = this.props.messages.map((message, index) => (
+    const Messages = this.props.tempMessages.map((message, index) => (
       <li key={`${index}-message`}>
         {message}
       </li>
