@@ -1,4 +1,5 @@
 export const CREATE_MESSAGE = 'CREATE_MESSAGE';
+export const SUBMIT_MESSAGE = 'SUBMIT_MESSAGE';
 export const CHANGE_ROOM = 'CHANGE_ROOM';
 export const SET_ROOMS = 'SET_ROOMS';
 export const SET_USER = 'SET_USER';
@@ -6,6 +7,15 @@ export const SET_USER = 'SET_USER';
 export function createMessage(message) {
   return {
     type: CREATE_MESSAGE,
+    message: message
+  };
+}
+
+export function submitMessage(message, chan) {
+  chan.push('new:msg', message)
+  return {
+    type: SUBMIT_MESSAGE,
+    sendingData: true,
     message: message
   };
 }
