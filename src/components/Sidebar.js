@@ -9,10 +9,10 @@ export default class Sidebar extends Component {
 
   componentWillMount() {
     request
-      .get('http://127.0.0.1:4000/rooms')
+      .get('http://127.0.0.1:4000/channels')
       .end((err, res) => {
-        let rooms = JSON.parse(res.text).data
-        this.props.setRooms(rooms)
+        let channels = JSON.parse(res.text).data
+        this.props.setChannels(channels)
         // Calling the end function will send the request
       });
   }
@@ -28,14 +28,14 @@ export default class Sidebar extends Component {
     this.setState({inputUsername: e.target.value})
   }
 
-  onRoomChange(room) {
-    this.props.changeRoom(room)
+  onRoomChange(channel) {
+    this.props.changeChannel(channel)
   }
 
   render() {
-    let Rooms = this.props.rooms.map((room, index) => (
-      <li onClick={e => this.onRoomChange(room)} key={`${index}-room.name`}>
-        {room.name}
+    let Channels = this.props.channels.map((channel, index) => (
+      <li onClick={e => this.onRoomChange(channel)} key={`${index}-room.name`}>
+        {channel.name}
       </li>
     ));
 
@@ -48,7 +48,7 @@ export default class Sidebar extends Component {
             </h3>
 
             <ul className='list'>
-              { Rooms }
+              { Channels }
             </ul>
 
             <input

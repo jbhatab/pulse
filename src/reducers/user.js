@@ -1,4 +1,4 @@
-import { SET_USER } from '../actions/roomActions';
+import { SET_USER } from '../actions/communityActions';
 
 
 export default function rooms (state = { username: null }, action) {

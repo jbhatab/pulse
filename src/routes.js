@@ -4,13 +4,13 @@ import App from './containers/App';
 import * as containers from './containers';
 
 const {
-  RoomContainer,
+  CommunityContainer,
   ChannelContainer
 } = containers;
 
 export default (
   <Route component={App}>
-    <Route path='/channels' component={RoomContainer} >
+    <Route path='/channels' component={CommunityContainer} >
       <Route path=':channelId' component={ChannelContainer}/>
     </Route>
   </Route>

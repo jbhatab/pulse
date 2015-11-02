@@ -1,25 +1,25 @@
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import React, { Component, PropTypes } from 'react'
-import * as RoomActions from '../actions/roomActions';
+import * as CommunityActions from '../actions/communityActions';
 import Sidebar from '../components/Sidebar';
 
 
 function mapStateToProps(state) {
   return {
-    rooms: state.rooms.list,
-    currentRoom: state.rooms.currentRoom,
+    channels: state.channels.list,
+    currentChannel: state.channels.currentChannel,
     user: state.user
   };
 }
 
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators(RoomActions, dispatch);
+  return bindActionCreators(CommunityActions, dispatch);
 }
 
 
-class RoomContainer extends React.Component {
+class CommunityContainer extends React.Component {
   render() {
     return (
       <div>
@@ -30,4 +30,4 @@ class RoomContainer extends React.Component {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(RoomContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(CommunityContainer);

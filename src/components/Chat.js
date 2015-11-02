@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react'
 
 export default class Chat extends Component {
   state = {
-    message: '',
+    message: ''
   }
 
   static propTypes = {
@@ -10,8 +10,8 @@ export default class Chat extends Component {
   }
 
   onMessageKeyDown(e) {
-    if (e.keyCode == 13 && this.props.currentRoom.id) {
-      this.props.submitMessage({user: 'anonymous', body: this.state.message, room_id: this.props.currentRoom.id})
+    if (e.keyCode == 13 && this.props.currentChannel.id) {
+      this.props.submitMessage({user: 'anonymous', body: this.state.message, channel_id: this.props.currentChannel.id})
       this.setState({message: ''})
       e.preventDefault()
     }
@@ -28,18 +28,18 @@ export default class Chat extends Component {
       </li>
     ));
 
-    let roomTitle;
-    if (this.props.currentRoom.name) {
-      roomTitle = this.props.currentRoom.name
+    let channelTitle;
+    if (this.props.currentChannel.name) {
+      channelTitle = this.props.currentChannel.name
     } else {
-      roomTitle = 'No Rooms'
+      channelTitle = 'No Channels'
     }
 
     return (
       <div>
         <div className='chat-wrapper'>
           <h1>
-            { roomTitle }
+            { channelTitle }
           </h1>
           <ul>
             { Messages }
