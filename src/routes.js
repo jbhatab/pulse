@@ -3,14 +3,15 @@ import { Route } from 'react-router';
 import App from './containers/App';
 import * as containers from './containers';
 
-
 const {
-  ChatPage
+  CommunityContainer,
+  ChannelContainer
 } = containers;
-
 
 export default (
   <Route component={App}>
-    <Route path="/" component={ChatPage} />
+    <Route path='/channels' component={CommunityContainer} >
+      <Route path=':channelId' component={ChannelContainer}/>
+    </Route>
   </Route>
 );

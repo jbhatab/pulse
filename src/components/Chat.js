@@ -1,11 +1,8 @@
 import React, { Component, PropTypes } from 'react'
-import request from "superagent"
-import Sidebar from "./Sidebar"
-
 
 export default class Chat extends Component {
   state = {
-    message: '',
+    message: ''
   }
 
   static propTypes = {
@@ -13,8 +10,8 @@ export default class Chat extends Component {
   }
 
   onMessageKeyDown(e) {
-    if (e.keyCode == 13 && this.props.currentRoom.id) {
-      this.props.submitMessage({user: 'anonymous', body: this.state.message, room_id: this.props.currentRoom.id})
+    if (e.keyCode == 13 && this.props.currentChannel.id) {
+      this.props.submitMessage({user: 'anonymous', body: this.state.message, channel_id: this.props.currentChannel.id})
       this.setState({message: ''})
       e.preventDefault()
     }
@@ -31,35 +28,29 @@ export default class Chat extends Component {
       </li>
     ));
 
-    let roomTitle;
-    if (this.props.currentRoom.name) {
-      roomTitle = this.props.currentRoom.name
+    let channelTitle;
+    if (this.props.currentChannel.name) {
+      channelTitle = this.props.currentChannel.name
     } else {
-      roomTitle = 'No Rooms'
+      channelTitle = 'No Channels'
     }
 
     return (
-      <div>
-        <Sidebar {...this.props}/>
-        <div className='chat-wrapper'>
-          <h1>
-            { roomTitle }
-          </h1>
-          <ul>
-            { Messages }
-          </ul>
+      <div className='chat-wrapper'>
+        <h1>
+          { channelTitle }
+        </h1>
+        <ul>
+          { Messages }
+        </ul>
 
-          <div className='chat-input-wrapper'>
-            <input
-              className='chat-input'
-              placeholder='Enter a message mother fucker!!!'
-              onChange={e => this.onMessageChange(e)}
-              onKeyDown={e => this.onMessageKeyDown(e)}
-              value={this.state.message}/>
-          </div>
-        </div>
-
-        <div className='right-sidebar-wrapper sidebar-wrapper'>
+        <div className='chat-input-wrapper'>
+          <input
+            className='chat-input'
+            placeholder='Enter a message mother fucker!!!'
+            onChange={e => this.onMessageChange(e)}
+            onKeyDown={e => this.onMessageKeyDown(e)}
+            value={this.state.message}/>
         </div>
       </div>
     );

@@ -20,7 +20,7 @@ app.use(require('morgan')('short'));
   }));
 })();
 
-app.get('/', function root(req, res) {
+app.get('*', function root(req, res) {
   res.sendFile(__dirname + '/index.html');
 });
 

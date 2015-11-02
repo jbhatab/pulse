@@ -1,11 +1,12 @@
-import { CREATE_MESSAGE, SUBMIT_MESSAGE, CHANGE_ROOM } from '../actions/chat';
+import { CREATE_MESSAGE, SUBMIT_MESSAGE } from '../actions/channelActions';
+import { CHANGE_CHANNEL } from '../actions/communityActions';
 
 
 export default function messages(state = { list: [] }, action) {
   switch (action.type) {
   case SUBMIT_MESSAGE:
     return state
-  case CHANGE_ROOM:
+  case CHANGE_CHANNEL:
     return { ...state, list: []};
   case CREATE_MESSAGE:
     // State mutations are bad, in dev mode, we detect them and throw an error.

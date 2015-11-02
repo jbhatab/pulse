@@ -1,10 +1,3 @@
-import { bindActionCreators } from 'redux';
-import React, { Component, PropTypes } from 'react'
-import {Socket, LongPoller} from "../phoenix"
-import { connect } from 'react-redux';
-import Chat from '../components/Chat';
-import * as ChatActions from '../actions/chat';
-
 // FUNCTIONAL PROGRAMMMINGGGNNGNGNGNGNGNGNGN
 // GET WITH IT
 // let socket = new Socket("ws://127.0.0.1:4000/socket", {
@@ -55,56 +48,3 @@ import * as ChatActions from '../actions/chat';
 //   }
 //   // return wrapActionCreator(chatAction, chan)
 // })
-
-
-function mapStateToProps(state) {
-  return {
-    messages: state.messages.list,
-    rooms: state.rooms.list,
-    currentRoom: state.rooms.currentRoom,
-    user: state.user
-  };
-}
-
-
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators(ChatActions, dispatch);
-}
-
-
-class ChatPageContainer extends React.Component {
-  componentWillMount() {
-    let socket = new Socket('ws://127.0.0.1:4000/socket', {
-      logger: ((kind, msg, data) => { console.log(`${kind}: ${msg}`, data) })
-    })
-
-    socket.connect({user_id: '123'})
-
-    this.chan = socket.chan('rooms:lobby', {})
-    this.chan.join().receive('ignore', () => console.log('auth error'))
-
-    this.chan.on('new:msg', msg => {
-      this.props.createMessage(`${msg.user || 'anonymous'}: ${msg.body}`)
-    })
-
-    this.chan.on('user:entered', msg => {
-      this.props.createMessage(`${msg.user || 'anonymous'} Entered`)
-    })
-
-    this.chan.on('user:set_username', user => {
-      this.props.createMessage(`${user.username} set their name`)
-    })
-  }
-
-  submitMessage(message) {
-    this.props.submitMessage(message, this.chan)
-  }
-
-  render() {
-    return (
-      <Chat {...this.props} submitMessage={::this.submitMessage} />
-    )
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(ChatPageContainer);

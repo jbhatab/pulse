@@ -1,21 +1,10 @@
 import React, { Component, PropTypes } from 'react'
 import {Socket, LongPoller} from '../phoenix'
-import request from 'superagent'
-
+import { Link } from 'react-router'
 
 export default class Sidebar extends Component {
 
   state = {inputUsername: ''}
-
-  componentWillMount() {
-    request
-      .get('http://127.0.0.1:4000/rooms')
-      .end((err, res) => {
-        let rooms = JSON.parse(res.text).data
-        this.props.setRooms(rooms)
-        // Calling the end function will send the request
-      });
-  }
 
   onUserKeyDown(e) {
     if (e.keyCode == 13) {
@@ -28,15 +17,15 @@ export default class Sidebar extends Component {
     this.setState({inputUsername: e.target.value})
   }
 
-  onRoomChange(room) {
-    this.props.changeRoom(room)
+  onRoomChange(channel) {
+    this.props.changeChannel(channel)
   }
 
   render() {
-    let Rooms = this.props.rooms.map((room, index) => (
-      <li onClick={e => this.onRoomChange(room)} key={`${index}-room.name`}>
-        {room.name}
-      </li>
+    let Channels = this.props.channels.map((channel, index) => (
+      <Link to={`/channels/${channel.id}`} key={`${index}-channel-link`}>
+        {channel.name}
+      </Link>
     ));
 
     return (
@@ -47,9 +36,9 @@ export default class Sidebar extends Component {
               Channels
             </h3>
 
-            <ul className='list'>
-              { Rooms }
-            </ul>
+            <div className='list'>
+              { Channels }
+            </div>
 
             <input
               className='user-input'

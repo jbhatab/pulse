@@ -1,12 +1,12 @@
 import { combineReducers } from 'redux';
 import messages from './messages';
-import rooms from './rooms';
+import channels from './channels';
 import user from './user';
 
 const rootReducer = combineReducers({
   messages: messages,
 
-  rooms: rooms,
+  channels: channels,
 
   user: user
 });
