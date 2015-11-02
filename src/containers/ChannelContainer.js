@@ -1,9 +1,10 @@
 import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 import React, { Component, PropTypes } from 'react'
 import {Socket, LongPoller} from "../phoenix"
-import { connect } from 'react-redux';
+import * as ChatActions from '../actions/chatActions';
 import Chat from '../components/Chat';
-import * as ChatActions from '../actions/chat';
+
 
 // FUNCTIONAL PROGRAMMMINGGGNNGNGNGNGNGNGNGN
 // GET WITH IT
@@ -72,15 +73,15 @@ function mapDispatchToProps(dispatch) {
 }
 
 
-class ChatPageContainer extends React.Component {
+class ChannelContainer extends React.Component {
   componentWillMount() {
-    let socket = new Socket('ws://127.0.0.1:4000/socket', {
+    this.socket = new Socket('ws://127.0.0.1:4000/socket', {
       logger: ((kind, msg, data) => { console.log(`${kind}: ${msg}`, data) })
     })
 
-    socket.connect({user_id: '123'})
+    this.socket.connect({user_id: '123'})
 
-    this.chan = socket.chan('rooms:lobby', {})
+    this.chan = this.socket.chan('rooms:lobby', {})
     this.chan.join().receive('ignore', () => console.log('auth error'))
 
     this.chan.on('new:msg', msg => {
@@ -96,6 +97,10 @@ class ChatPageContainer extends React.Component {
     })
   }
 
+  componentWillUnmount() {
+    this.socket.disconnect()
+  }
+
   submitMessage(message) {
     this.props.submitMessage(message, this.chan)
   }
@@ -107,4 +112,4 @@ class ChatPageContainer extends React.Component {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ChatPageContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(ChannelContainer);

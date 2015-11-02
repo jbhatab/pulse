@@ -1,7 +1,4 @@
 import React, { Component, PropTypes } from 'react'
-import request from "superagent"
-import Sidebar from "./Sidebar"
-
 
 export default class Chat extends Component {
   state = {
@@ -40,7 +37,6 @@ export default class Chat extends Component {
 
     return (
       <div>
-        <Sidebar {...this.props}/>
         <div className='chat-wrapper'>
           <h1>
             { roomTitle }

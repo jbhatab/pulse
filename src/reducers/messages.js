@@ -1,4 +1,5 @@
-import { CREATE_MESSAGE, SUBMIT_MESSAGE, CHANGE_ROOM } from '../actions/chat';
+import { CREATE_MESSAGE, SUBMIT_MESSAGE } from '../actions/chatActions';
+import { CHANGE_ROOM } from '../actions/roomActions';
 
 
 export default function messages(state = { list: [] }, action) {

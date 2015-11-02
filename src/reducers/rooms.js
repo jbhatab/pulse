@@ -1,5 +1,4 @@
-import { CHANGE_ROOM, SET_ROOMS } from '../actions/chat';
-
+import { CHANGE_ROOM, SET_ROOMS } from '../actions/roomActions';
 
 export default function rooms (state = { list: [], currentRoom: {} }, action) {
   switch (action.type) {
