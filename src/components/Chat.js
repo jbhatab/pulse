@@ -36,26 +36,21 @@ export default class Chat extends Component {
     }
 
     return (
-      <div>
-        <div className='chat-wrapper'>
-          <h1>
-            { channelTitle }
-          </h1>
-          <ul>
-            { Messages }
-          </ul>
+      <div className='chat-wrapper'>
+        <h1>
+          { channelTitle }
+        </h1>
+        <ul>
+          { Messages }
+        </ul>
 
-          <div className='chat-input-wrapper'>
-            <input
-              className='chat-input'
-              placeholder='Enter a message mother fucker!!!'
-              onChange={e => this.onMessageChange(e)}
-              onKeyDown={e => this.onMessageKeyDown(e)}
-              value={this.state.message}/>
-          </div>
-        </div>
-
-        <div className='right-sidebar-wrapper sidebar-wrapper'>
+        <div className='chat-input-wrapper'>
+          <input
+            className='chat-input'
+            placeholder='Enter a message mother fucker!!!'
+            onChange={e => this.onMessageChange(e)}
+            onKeyDown={e => this.onMessageKeyDown(e)}
+            value={this.state.message}/>
         </div>
       </div>
     );

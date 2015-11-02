@@ -4,6 +4,7 @@ import React, { Component, PropTypes } from 'react'
 import {Socket, LongPoller} from "../phoenix"
 import * as ChannelActions from '../actions/channelActions';
 import Chat from '../components/Chat';
+import request from 'superagent';
 
 function mapStateToProps(state) {
 
@@ -20,9 +21,7 @@ function mapDispatchToProps(dispatch) {
 
 class ChannelContainer extends React.Component {
   componentWillMount() {
-    console.log('PROPS')
-    console.log(this.props)
-
+    console.log('CHANNEL CONTAINER WILL MOUNT')
     this.socket = new Socket('ws://127.0.0.1:4000/socket', {
       logger: ((kind, msg, data) => { console.log(`${kind}: ${msg}`, data) })
     })
@@ -46,6 +45,13 @@ class ChannelContainer extends React.Component {
     this.chan.on('user:set_username', user => {
       this.props.createMessage(`${user.username} set their name`)
     })
+
+    console.log(this.props.routeParams.channelId)
+  }
+
+  componentWillReceiveProps(props) {
+    console.log('RECEIVE PROPS')
+    console.log(props)
   }
 
   componentWillUnmount() {
