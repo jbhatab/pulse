@@ -17,15 +17,15 @@ export default class Sidebar extends Component {
     this.setState({inputUsername: e.target.value})
   }
 
-  onRoomChange(channel) {
+  onChangeChannel(channel) {
     this.props.changeChannel(channel)
   }
 
   render() {
     let Channels = this.props.channels.map((channel, index) => (
-      <Link to={`/channels/${channel.id}`} key={`${index}-channel-link`}>
+      <li onClick={e=> this.onChangeChannel(channel)} key={`${index}-channel-link`}>
         {channel.name}
-      </Link>
+      </li>
     ));
 
     return (
@@ -36,9 +36,9 @@ export default class Sidebar extends Component {
               Channels
             </h3>
 
-            <div className='list'>
+            <ul className='list'>
               { Channels }
-            </div>
+            </ul>
 
             <input
               className='user-input'

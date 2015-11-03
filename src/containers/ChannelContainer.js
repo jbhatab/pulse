@@ -21,7 +21,6 @@ function mapDispatchToProps(dispatch) {
 
 class ChannelContainer extends React.Component {
   componentWillMount() {
-    console.log('CHANNEL CONTAINER WILL MOUNT')
     this.socket = new Socket('ws://127.0.0.1:4000/socket', {
       logger: ((kind, msg, data) => { console.log(`${kind}: ${msg}`, data) })
     })
@@ -47,11 +46,6 @@ class ChannelContainer extends React.Component {
     })
 
     console.log(this.props.routeParams.channelId)
-  }
-
-  componentWillReceiveProps(props) {
-    console.log('RECEIVE PROPS')
-    console.log(props)
   }
 
   componentWillUnmount() {

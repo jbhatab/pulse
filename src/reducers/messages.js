@@ -7,7 +7,7 @@ export default function messages(state = { list: [] }, action) {
   case SUBMIT_MESSAGE:
     return state
   case CHANGE_CHANNEL:
-    return { ...state, list: []};
+    return { ...state, list: action.messages};
   case CREATE_MESSAGE:
     // State mutations are bad, in dev mode, we detect them and throw an error.
     // Try it out by uncommenting the line below and running `npm run dev`!

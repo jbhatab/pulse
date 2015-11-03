@@ -27,9 +27,6 @@ function mapDispatchToProps(dispatch) {
 class CommunityContainer extends React.Component {
   componentWillMount() {
     if(this.props.channelsLoaded) {
-      let channelIds = _.map(this.props.channels, (channel)=> channel.id)
-      console.log(_.includes(channelIds, this.props.currentChannel.id))
-      // if()
       this.props.history.pushState(null, `/channels/${this.props.currentChannel.id}`)
     } else {
       request
