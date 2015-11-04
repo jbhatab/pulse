@@ -25,10 +25,7 @@ class ChannelContainer extends React.Component {
       logger: ((kind, msg, data) => { console.log(`${kind}: ${msg}`, data) })
     })
 
-    this.socket.connect({user_id: '123'})
-
-    this.chan = this.socket.chan('rooms:lobby', {})
-    
+    this.socket.connect({user_id: '123'})    
 
     this.chan = this.socket.chan('channels:lobby', {})
     this.chan.join().receive('ignore', () => console.log('auth error'))
@@ -42,10 +39,8 @@ class ChannelContainer extends React.Component {
     })
 
     this.chan.on('user:set_username', user => {
-      this.props.createMessage(`${user.username} set their name`)
+      this.props.changeUsername(user)
     })
-
-    console.log(this.props.routeParams.channelId)
   }
 
   componentWillUnmount() {

@@ -21,7 +21,17 @@ export default class Sidebar extends Component {
     this.props.changeChannel(channel)
   }
 
+  openLogin() {
+    this.props.history.pushState(null, '/channels/login')
+  }
+
   render() {
+    // <input
+    //   className='user-input'
+    //   placeholder='Enter a name mother fucker!!!'
+    //   onChange={e => this.onUserChange(e)}
+    //   onKeyDown={e => this.onUserKeyDown(e)}
+    //   value={this.state.inputUsername}/>
     let Channels = this.props.channels.map((channel, index) => (
       <li onClick={e=> this.onChangeChannel(channel)} key={`${index}-channel-link`}>
         {channel.name}
@@ -40,12 +50,9 @@ export default class Sidebar extends Component {
               { Channels }
             </ul>
 
-            <input
-              className='user-input'
-              placeholder='Enter a name mother fucker!!!'
-              onChange={e => this.onUserChange(e)}
-              onKeyDown={e => this.onUserKeyDown(e)}
-              value={this.state.inputUsername}/>
+            <a className='login-button' onClick={e=> this.openLogin()}>
+              Login
+            </a>
           </div>
         </div>
       </div>

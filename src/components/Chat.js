@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react'
+import React, { Component, PropTypes } from 'react';
+import RightSidebar from '../components/RightSidebar';
 
 export default class Chat extends Component {
   state = {
@@ -36,22 +37,25 @@ export default class Chat extends Component {
     }
 
     return (
-      <div className='chat-wrapper'>
-        <h1>
-          { channelTitle }
-        </h1>
-        <ul>
-          { Messages }
-        </ul>
+      <div>
+        <div className='chat-wrapper'>
+          <h1>
+            { channelTitle }
+          </h1>
+          <ul>
+            { Messages }
+          </ul>
 
-        <div className='chat-input-wrapper'>
-          <input
-            className='chat-input'
-            placeholder='Enter a message mother fucker!!!'
-            onChange={e => this.onMessageChange(e)}
-            onKeyDown={e => this.onMessageKeyDown(e)}
-            value={this.state.message}/>
+          <div className='chat-input-wrapper'>
+            <input
+              className='chat-input'
+              placeholder='Enter a message mother fucker!!!'
+              onChange={e => this.onMessageChange(e)}
+              onKeyDown={e => this.onMessageKeyDown(e)}
+              value={this.state.message}/>
+          </div>
         </div>
+        <RightSidebar {...this.props} />
       </div>
     );
   }

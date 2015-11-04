@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import React, { Component, PropTypes } from 'react'
 import * as CommunityActions from '../actions/communityActions';
 import LeftSidebar from '../components/LeftSidebar';
-import RightSidebar from '../components/RightSidebar';
 import Loader from '../components/Loader';
 import request from 'superagent';
 import _ from 'lodash';
@@ -39,13 +38,17 @@ class CommunityContainer extends React.Component {
     }
   }
 
+  openLogin() {
+
+    console.log('open login')
+  }
+
   render() {
     if(this.props.channelsLoaded) {
       return (
         <div>
-          <LeftSidebar {...this.props} />
+          <LeftSidebar {...this.props} openLogin={::this.openLogin} />
           {this.props.children}
-          <RightSidebar {...this.props} />
         </div>
       );
     } else {
